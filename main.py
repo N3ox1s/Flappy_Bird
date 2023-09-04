@@ -20,6 +20,7 @@ class Main(object):
             self.physics.physics_loop()
 
             pygame.display.update()
+
         pygame.quit()
 
 
