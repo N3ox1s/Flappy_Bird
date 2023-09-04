@@ -8,13 +8,16 @@ class Main(object):
         self.running = True
         self.FPS = 60
         self.clock = pygame.time.Clock()
+        self.interface = Interface()
+        self.physics = Physics(self.interface)
 
     def main_loop(self):
         while self.running:
             self.clock.tick(self.FPS)
-            interface.interface_loop()
-            if interface.keyboard_interrupt:
+            self.interface.interface_loop()
+            if self.interface.keyboard_interrupt:
                 self.running = False
+            self.physics.physics_loop()
 
             pygame.display.update()
         pygame.quit()
@@ -23,9 +26,7 @@ class Main(object):
 if __name__ == '__main__':
     pygame.init()
     main = Main()
-    physics = Physics()
-    interface = Interface()
 
-    interface.load_assets()
-    interface.interface_setup()
+    main.interface.load_assets()
+    main.interface.interface_setup()
     main.main_loop()
