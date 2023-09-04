@@ -22,4 +22,5 @@ if __name__ == '__main__':
     physics = Physics()
     interface = Interface()
 
+    interface.load_assets()
     main.main_loop()

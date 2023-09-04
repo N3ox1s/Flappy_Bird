@@ -11,3 +11,6 @@ class Interface(object):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.keyboard_interrupt = True
+
+    def load_assets(self):
+        pygame.display.set_icon(pygame.image.load("Assets/favicon.ico"))
