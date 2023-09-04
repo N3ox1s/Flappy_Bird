@@ -1,8 +1,13 @@
 import pygame
 
+
 class Interface(object):
-    def __int__(self):
+    def __init__(self):
         self.screen = pygame.display.set_mode((1280, 720))
         self.clock = pygame.time.Clock()
-        self.running = True
-        self.dt = 0
+        self.keyboard_interrupt = False
+
+    def interface_loop(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.keyboard_interrupt = True
