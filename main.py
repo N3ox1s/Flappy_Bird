@@ -1,1 +1,1 @@
-#THomas ist ein nasser Hund
+import pygame
