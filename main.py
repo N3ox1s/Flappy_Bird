@@ -14,7 +14,7 @@ class Main(object):
     def main_loop(self):
         while self.running:
             self.clock.tick(self.FPS)
-            self.interface.interface_loop()
+            self.interface.interface_loop(self.physics)
             if self.interface.keyboard_interrupt:
                 self.running = False
             self.physics.physics_loop(self.interface)

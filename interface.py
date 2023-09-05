@@ -11,7 +11,7 @@ class Interface(object):
         self.keyboard_interrupt = False
         self.jumped = False
 
-    def interface_loop(self):
+    def interface_loop(self, physics):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.keyboard_interrupt = True
@@ -33,11 +33,16 @@ class Interface(object):
         if abs(self.base_scroll) > self.bg_width:
             self.base_scroll = 0
 
+        self.screen.blit(self.yellow_bird_1, (self.width // 2, physics.pos_y))
+
     def load_assets(self):
         self.icon = pygame.image.load("Assets/favicon.ico")
         self.bg_day = pygame.image.load("Assets/sprites/background-day.png")
         self.bg_night = pygame.image.load("Assets/sprites/background-night.png")
         self.bg_base = pygame.image.load("Assets/sprites/base.png")
+        self.yellow_bird_1 = pygame.image.load("Assets/sprites/yellowbird-upflap.png")
+        self.yellow_bird_2 = pygame.image.load("Assets/sprites/yellowbird-midflap.png")
+        self.yellow_bird_3 = pygame.image.load("Assets/sprites/yellowbird-downflap.png")
 
     def interface_setup(self):
         self.bg_width = self.bg_day.get_width()
