@@ -28,7 +28,7 @@ class Interface(object):
         if self.movable_pipe_distance <= 0:
             self.pipes.append(pipe())
             self.movable_pipe_distance = physics.pipe_distance
-            self.pipes[-1].set_pipe_length(random.randint(150, self.height-100))
+            self.pipes[-1].set_pipe_length(random.randint(175, self.height-137))
 
         for i in self.pipes:
             if abs(i.pipe_scroll) >= self.width + self.pipe_green.get_width() + 300:
@@ -86,7 +86,7 @@ class pipe(object):
     def __init__(self):
         self.pipe_scroll = 0
         self.lower_pipe_length = 0
-        self.pipe_gap = random.randint(100, 150)
+        self.pipe_gap = random.randint(120, 200)
 
     def move(self):
         self.pipe_scroll -= 2
