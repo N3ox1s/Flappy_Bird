@@ -35,6 +35,7 @@ class Interface(object):
                 self.pipes.remove(i)
             i.move()
             self.screen.blit(self.pipe_green, (self.width + i.pipe_scroll, i.lower_pipe_length))
+            self.screen.blit(pygame.transform.rotate(self.pipe_green, 180), (self.width + i.pipe_scroll, i.lower_pipe_length - i.pipe_gap - 320))
 
         for i in range(self.tiles_base):
             self.screen.blit(self.bg_base, (i * self.base_width + self.fg_scroll, 400))
@@ -85,6 +86,7 @@ class pipe(object):
     def __init__(self):
         self.pipe_scroll = 0
         self.lower_pipe_length = 0
+        self.pipe_gap = random.randint(100, 150)
 
     def move(self):
         self.pipe_scroll -= 2
