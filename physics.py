@@ -3,7 +3,7 @@ class Physics(object):
         self.pos_y = 100
         self.gravity = 500
         self.velocity = 0
-        self.tube_distance = 100
+        self.pipe_distance = 300
         self.score = 0
         self.counter = 0
         self.dt = 0
@@ -19,7 +19,7 @@ class Physics(object):
         self.velocity -= self.gravity * self.dt
         self.pos_y -= self.velocity * self.dt
         self.counter += 1
-        if self.counter == self.tube_distance:
+        if self.counter == self.pipe_distance:
             self.counter = 0
             self.score += 1
             print(self.score)
