@@ -22,3 +22,4 @@ class Physics(object):
         if self.counter == self.tube_distance:
             self.counter = 0
             self.score += 1
+            print(self.score)

@@ -33,7 +33,16 @@ class Interface(object):
         if abs(self.base_scroll) > self.bg_width:
             self.base_scroll = 0
 
-        self.screen.blit(self.yellow_bird_1, (self.width // 2, physics.pos_y))
+        self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
+
+    def current_bird_sprite(self):
+        time = pygame.time.get_ticks() // 100
+        if time % 3 == 0:
+            return self.yellow_bird_1
+        if time % 3 == 1:
+            return self.yellow_bird_2
+        if time % 3 == 2:
+            return self.yellow_bird_3
 
     def load_assets(self):
         self.icon = pygame.image.load("Assets/favicon.ico")
