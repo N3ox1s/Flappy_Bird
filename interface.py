@@ -1,6 +1,7 @@
 import pygame
 import math
 import random
+from pipe import Pipe
 
 class Interface(object):
     def __init__(self):
@@ -27,7 +28,7 @@ class Interface(object):
         self.movable_pipe_distance -= 2
 
         if self.movable_pipe_distance <= 0:
-            self.pipes.append(pipe())
+            self.pipes.append(Pipe())
             self.movable_pipe_distance = physics.pipe_distance
             self.pipes[-1].set_pipe_length(random.randint(175, self.height-137))
             self.pipes[-1].set_pipe_skin(random.choice(self.pipe_skins))
@@ -83,20 +84,3 @@ class Interface(object):
 
         pygame.display.set_icon(self.icon)
         pygame.display.set_caption("Flappy Bird")
-
-
-class pipe(object):
-    def __init__(self):
-        self.pipe_scroll = 0
-        self.lower_pipe_length = 0
-        self.pipe_gap = random.randint(110, 150)
-        self.pipe_image = None
-
-    def move(self):
-        self.pipe_scroll -= 2
-
-    def set_pipe_length(self, lower_pipe_length):
-        self.lower_pipe_length = lower_pipe_length
-
-    def set_pipe_skin(self, pipe_image):
-        self.pipe_image = pipe_image

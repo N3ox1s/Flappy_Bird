@@ -18,7 +18,7 @@ class Physics(object):
         self.jump(interface)
         self.velocity -= self.gravity * self.dt
         self.pos_y -= self.velocity * self.dt
-        self.counter += 1
+        self.counter += 2
         if self.counter == self.pipe_distance:
             self.counter = 0
             self.score += 1
