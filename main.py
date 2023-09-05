@@ -9,7 +9,7 @@ class Main(object):
         self.FPS = 60
         self.clock = pygame.time.Clock()
         self.interface = Interface()
-        self.physics = Physics(self.interface)
+        self.physics = Physics()
 
     def main_loop(self):
         while self.running:
@@ -17,7 +17,7 @@ class Main(object):
             self.interface.interface_loop()
             if self.interface.keyboard_interrupt:
                 self.running = False
-            self.physics.physics_loop()
+            self.physics.physics_loop(self.interface)
 
             pygame.display.update()
 

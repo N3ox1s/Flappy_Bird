@@ -49,6 +49,3 @@ class Interface(object):
 
         pygame.display.set_icon(self.icon)
         pygame.display.set_caption("Flappy Bird")
-        self.screen.blit(self.bg_day, (0, 0))
-        self.screen.blit(self.bg_base, (0, 400))
-
