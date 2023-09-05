@@ -12,6 +12,7 @@ class Interface(object):
         self.jumped = False
         self.movable_pipe_distance = 0
         self.pipes = []
+        self.pipe_skins = []
 
     def interface_loop(self, physics):
         for event in pygame.event.get():
@@ -29,13 +30,14 @@ class Interface(object):
             self.pipes.append(pipe())
             self.movable_pipe_distance = physics.pipe_distance
             self.pipes[-1].set_pipe_length(random.randint(175, self.height-137))
+            self.pipes[-1].set_pipe_skin(random.choice(self.pipe_skins))
 
         for i in self.pipes:
-            if abs(i.pipe_scroll) >= self.width + self.pipe_green.get_width() + 300:
+            if abs(i.pipe_scroll) >= self.width + i.pipe_image.get_width() + 300:
                 self.pipes.remove(i)
             i.move()
-            self.screen.blit(self.pipe_green, (self.width + i.pipe_scroll, i.lower_pipe_length))
-            self.screen.blit(pygame.transform.rotate(self.pipe_green, 180), (self.width + i.pipe_scroll, i.lower_pipe_length - i.pipe_gap - 320))
+            self.screen.blit(i.pipe_image, (self.width + i.pipe_scroll, i.lower_pipe_length))
+            self.screen.blit(pygame.transform.rotate(i.pipe_image, 180), (self.width + i.pipe_scroll, i.lower_pipe_length - i.pipe_gap - 320))
 
         for i in range(self.tiles_base):
             self.screen.blit(self.bg_base, (i * self.base_width + self.fg_scroll, 400))
@@ -68,7 +70,8 @@ class Interface(object):
         self.yellow_bird_1 = pygame.image.load("Assets/sprites/yellowbird-upflap.png")
         self.yellow_bird_2 = pygame.image.load("Assets/sprites/yellowbird-midflap.png")
         self.yellow_bird_3 = pygame.image.load("Assets/sprites/yellowbird-downflap.png")
-        self.pipe_green = pygame.image.load("Assets/sprites/pipe-green.png")
+        self.pipe_skins.append(pygame.image.load("Assets/sprites/pipe-green.png"))
+        self.pipe_skins.append(pygame.image.load("Assets/sprites/pipe-red.png"))
 
     def interface_setup(self):
         self.bg_width = self.bg_day.get_width()
@@ -86,7 +89,8 @@ class pipe(object):
     def __init__(self):
         self.pipe_scroll = 0
         self.lower_pipe_length = 0
-        self.pipe_gap = random.randint(120, 200)
+        self.pipe_gap = random.randint(110, 150)
+        self.pipe_image = None
 
     def move(self):
         self.pipe_scroll -= 2
@@ -94,3 +98,5 @@ class pipe(object):
     def set_pipe_length(self, lower_pipe_length):
         self.lower_pipe_length = lower_pipe_length
 
+    def set_pipe_skin(self, pipe_image):
+        self.pipe_image = pipe_image
