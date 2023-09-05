@@ -5,7 +5,7 @@ class Physics(object):
         self.velocity = 0
         self.pipe_distance = 300
         self.score = 0
-        self.counter = 0
+        self.counter = - self.pipe_distance
         self.dt = 0
 
     def jump(self, interface):
