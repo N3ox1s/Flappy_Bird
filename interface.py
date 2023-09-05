@@ -18,10 +18,10 @@ class Interface(object):
             if pygame.key.get_pressed()[pygame.K_SPACE]:
                 self.jumped = True
 
-        for i in range(0, self.tiles_bg):
+        for i in range(self.tiles_bg):
             self.screen.blit(self.bg_day, (i * self.bg_width + self.bg_scroll, 0))
 
-        for i in range(0, self.tiles_base):
+        for i in range(self.tiles_base):
             self.screen.blit(self.bg_base, (i * self.base_width + self.fg_scroll, 400))
 
         self.bg_scroll -= 1
