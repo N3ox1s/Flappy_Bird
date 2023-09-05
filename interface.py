@@ -21,17 +21,23 @@ class Interface(object):
         for i in range(self.tiles_bg):
             self.screen.blit(self.bg_day, (i * self.bg_width + self.bg_scroll, 0))
 
+        self.screen.blit(self.pipe_green, (self.width + self.pipe_scroll, 100))
+
         for i in range(self.tiles_base):
             self.screen.blit(self.bg_base, (i * self.base_width + self.fg_scroll, 400))
 
         self.bg_scroll -= 1
         self.fg_scroll -= 2
+        self.pipe_scroll -= 2
 
         if abs(self.bg_scroll) > self.bg_width:
             self.bg_scroll = 0
 
         if abs(self.fg_scroll) > self.bg_width:
             self.fg_scroll = 0
+
+        if abs(self.pipe_scroll) >= self.width + self.pipe_green.get_width():
+            self.pipe_scroll = 0
 
         self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
 
@@ -52,12 +58,14 @@ class Interface(object):
         self.yellow_bird_1 = pygame.image.load("Assets/sprites/yellowbird-upflap.png")
         self.yellow_bird_2 = pygame.image.load("Assets/sprites/yellowbird-midflap.png")
         self.yellow_bird_3 = pygame.image.load("Assets/sprites/yellowbird-downflap.png")
+        self.pipe_green = pygame.image.load("Assets/sprites/pipe-green.png")
 
     def interface_setup(self):
         self.bg_width = self.bg_day.get_width()
         self.base_width = self.bg_base.get_width()
         self.bg_scroll = 0
         self.fg_scroll = 0
+        self.pipe_scroll = 0
         self.tiles_bg = math.ceil(self.width / self.bg_width) + 1
         self.tiles_base = math.ceil(self.width / self.base_width) + 1
 

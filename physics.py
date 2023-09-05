@@ -2,8 +2,8 @@ class Physics(object):
     def __init__(self):
         self.pos_y = 100
         self.gravity = 500
-        self.tube_distance = 100
         self.velocity = 0
+        self.tube_distance = 100
         self.score = 0
         self.counter = 0
         self.dt = 0
