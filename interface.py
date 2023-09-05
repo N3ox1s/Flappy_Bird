@@ -67,7 +67,6 @@ class Interface(object):
 
         # Collider
         self.ground_collider = pygame.Rect(0, 400, self.width, self.height)
-        # pygame.draw.rect(self.screen, (255, 255, 255), self.ground_collider)
 
         self.pipe_colliders = []
         for i in self.pipes:
