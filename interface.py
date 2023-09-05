@@ -22,16 +22,16 @@ class Interface(object):
             self.screen.blit(self.bg_day, (i * self.bg_width + self.bg_scroll, 0))
 
         for i in range(0, self.tiles_base):
-            self.screen.blit(self.bg_base, (i * self.base_width + self.base_scroll, 400))
+            self.screen.blit(self.bg_base, (i * self.base_width + self.fg_scroll, 400))
 
         self.bg_scroll -= 1
-        self.base_scroll -= 2
+        self.fg_scroll -= 2
 
         if abs(self.bg_scroll) > self.bg_width:
             self.bg_scroll = 0
 
-        if abs(self.base_scroll) > self.bg_width:
-            self.base_scroll = 0
+        if abs(self.fg_scroll) > self.bg_width:
+            self.fg_scroll = 0
 
         self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
 
@@ -57,7 +57,7 @@ class Interface(object):
         self.bg_width = self.bg_day.get_width()
         self.base_width = self.bg_base.get_width()
         self.bg_scroll = 0
-        self.base_scroll = 0
+        self.fg_scroll = 0
         self.tiles_bg = math.ceil(self.width / self.bg_width) + 1
         self.tiles_base = math.ceil(self.width / self.base_width) + 1
 
