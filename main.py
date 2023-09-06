@@ -38,6 +38,7 @@ class Main(object):
         pygame.display.update()
 
     def menu(self):
+        self.interface.display_elements(self.physics)
         self.interface.menu()
         if self.interface.keyboard_interrupt:
             self.running = False

@@ -53,6 +53,11 @@ class Interface(object):
 
         self.movable_pipe_distance -= 2
 
+        for i in self.pipes:
+            if abs(i.pipe_scroll) >= self.width + 500:
+                self.pipes.remove(i)
+            i.move()
+
         self.bg_scroll -= 1
         self.fg_scroll -= 2
 
@@ -89,9 +94,6 @@ class Interface(object):
             self.screen.blit(self.bg_day, (i * self.bg_width + self.bg_scroll, 0))
 
         for i in self.pipes:
-            if abs(i.pipe_scroll) >= self.width + 500:
-                self.pipes.remove(i)
-            i.move()
             self.screen.blit(i.pipe_image, (self.width + i.pipe_scroll, i.lower_pipe_length))
             self.screen.blit(pygame.transform.rotate(i.pipe_image, 180),
                              (self.width + i.pipe_scroll, i.lower_pipe_length - i.pipe_gap - 320))
@@ -149,6 +151,9 @@ class Interface(object):
         self.game_over = pygame.image.load("Assets/sprites/gameover.png")
         self.menu_button = pygame.image.load("Assets/sprites/menu-button.png")
         self.play_button = pygame.image.load("Assets/sprites/play-button.png")
+        self.score_board = pygame.image.load("Assets/sprites/score-board.png")
+        self.skin_menu = pygame.image.load("Assets/sprites/skin-menu.png")
+        self.big_play_button = pygame.image.load("Assets/sprites/big-play-button.png")
         self.bg_day = pygame.image.load("Assets/sprites/background-day.png")
         self.bg_night = pygame.image.load("Assets/sprites/background-night.png")
         self.bg_base = pygame.image.load("Assets/sprites/base.png")
