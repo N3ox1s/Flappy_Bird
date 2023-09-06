@@ -1,3 +1,6 @@
+import time
+
+
 class Physics(object):
     def __init__(self):
         self.pos_y = 100
@@ -5,13 +8,21 @@ class Physics(object):
         self.velocity = 0
         self.pipe_distance = 300
         self.score = 0
-        self.counter = - self.pipe_distance
+        self.counter = - self.pipe_distance - 20
         self.dt = 0
 
     def jump(self, interface):
         if interface.jumped:
             self.velocity = 300
             interface.jumped = False
+
+    def reset(self, interface):
+        interface.clock.tick(60)
+        self.pos_y = 100
+        self.velocity = 0
+        self.score = 0
+        self.counter = - self.pipe_distance - 20
+        self.dt = 0
 
     def physics_loop(self, interface):
         self.dt = interface.clock.tick(60) / 1000
