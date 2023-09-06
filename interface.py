@@ -126,12 +126,10 @@ class Interface(object):
         if (menu_button_dim[0] < mouse[0] < menu_button_dim[1] and menu_button_dim[2] < mouse[1] < menu_button_dim[3]
                 and click):
             self.go_to_menu = True
-            print('menu')
         play_button_dim = (720, 720 + play_button.get_width(), 200, 200 + play_button.get_height())
         if (play_button_dim[0] < mouse[0] < play_button_dim[1] and play_button_dim[2] < mouse[1] < play_button_dim[3]
                 and click):
             self.restart = True
-            print('play')
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

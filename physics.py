@@ -4,7 +4,7 @@ import time
 class Physics(object):
     def __init__(self):
         self.pos_y = 100
-        self.gravity = 500
+        self.gravity = 800
         self.velocity = 0
         self.pipe_distance = 300
         self.score = 0
@@ -13,7 +13,7 @@ class Physics(object):
 
     def jump(self, interface):
         if interface.jumped:
-            self.velocity = 300
+            self.velocity = 350
             interface.jumped = False
 
     def reset(self, interface):
@@ -33,4 +33,3 @@ class Physics(object):
         if self.counter == self.pipe_distance:
             self.counter = 0
             self.score += 1
-            print(self.score)
