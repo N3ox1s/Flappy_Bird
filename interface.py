@@ -30,6 +30,17 @@ class Interface(object):
             if pygame.key.get_pressed()[pygame.K_SPACE]:
                 self.jumped = True
 
+        # calculate scroll of elements on screen
+        self.scroll(physics)
+
+        # Screen refresh
+        self.display_elements(physics)
+
+        # check for collisions
+        self.collider(physics)
+
+    def scroll(self, physics):
+
         # Movement of Elements
         if self.movable_pipe_distance <= 0:
             self.pipes.append(Pipe())
@@ -48,23 +59,7 @@ class Interface(object):
         if abs(self.fg_scroll) > self.bg_width:
             self.fg_scroll = 0
 
-        # Screen refresh
-        for i in range(self.tiles_bg):
-            self.screen.blit(self.bg_day, (i * self.bg_width + self.bg_scroll, 0))
-
-        for i in self.pipes:
-            if abs(i.pipe_scroll) >= self.width + 500:
-                self.pipes.remove(i)
-            i.move()
-            self.screen.blit(i.pipe_image, (self.width + i.pipe_scroll, i.lower_pipe_length))
-            self.screen.blit(pygame.transform.rotate(i.pipe_image, 180),
-                             (self.width + i.pipe_scroll, i.lower_pipe_length - i.pipe_gap - 320))
-
-        for i in range(self.tiles_base):
-            self.screen.blit(self.bg_base, (i * self.base_width + self.fg_scroll, 400))
-
-        self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
-
+    def collider(self, physics):
         # Collider
         self.ground_collider = pygame.Rect(0, 400, self.width, self.height)
 
@@ -85,6 +80,23 @@ class Interface(object):
                 print('collide')
         if self.ground_collider.colliderect(self.bird_collider):
             print('collide')
+
+    def display_elements(self, physics):
+        for i in range(self.tiles_bg):
+            self.screen.blit(self.bg_day, (i * self.bg_width + self.bg_scroll, 0))
+
+        for i in self.pipes:
+            if abs(i.pipe_scroll) >= self.width + 500:
+                self.pipes.remove(i)
+            i.move()
+            self.screen.blit(i.pipe_image, (self.width + i.pipe_scroll, i.lower_pipe_length))
+            self.screen.blit(pygame.transform.rotate(i.pipe_image, 180),
+                             (self.width + i.pipe_scroll, i.lower_pipe_length - i.pipe_gap - 320))
+
+        for i in range(self.tiles_base):
+            self.screen.blit(self.bg_base, (i * self.base_width + self.fg_scroll, 400))
+
+        self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
 
     def current_bird_sprite(self):
         time = pygame.time.get_ticks() // 100
