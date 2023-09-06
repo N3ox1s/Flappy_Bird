@@ -123,7 +123,7 @@ class Interface(object):
         self.pipe_skin_green = pygame.image.load("Assets/sprites/pipe-green.png")
         self.pipe_skin_red = pygame.image.load("Assets/sprites/pipe-red.png")
         self.current_pipe_skin = self.pipe_skin_red
-        self.font = pygame.font.Font("Assets/font/FlappyBirdRegular.ttf", 200)
+        self.font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 200)
 
 
     def interface_setup(self):
