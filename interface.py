@@ -98,6 +98,11 @@ class Interface(object):
 
         self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
 
+        self.screen.blit(self.font.render(str(physics.score), True, (255, 255, 255)), (100, 100))
+
+
+
+
     def current_bird_sprite(self):
         time = pygame.time.get_ticks() // 100
         if time % 3 == 0:
@@ -118,6 +123,8 @@ class Interface(object):
         self.pipe_skin_green = pygame.image.load("Assets/sprites/pipe-green.png")
         self.pipe_skin_red = pygame.image.load("Assets/sprites/pipe-red.png")
         self.current_pipe_skin = self.pipe_skin_red
+        self.font = pygame.font.Font("Assets/font/FlappyBirdRegular.ttf", 200)
+
 
     def interface_setup(self):
         self.bg_width = self.bg_day.get_width()
