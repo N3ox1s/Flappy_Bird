@@ -1,4 +1,6 @@
 import random
+
+
 class Pipe(object):
     def __init__(self):
         self.pipe_scroll = 0
