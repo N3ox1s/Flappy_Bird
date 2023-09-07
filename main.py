@@ -29,6 +29,8 @@ class Main(object):
         self.clock.tick(self.FPS)
         self.interface.interface_loop(self.physics)
         self.physics.physics_loop(self.interface)
+        if self.interface.high_score < self.physics.score:
+            self.interface.high_score = self.physics.score
         if self.interface.keyboard_interrupt:
             self.running = False
         if self.interface.collided:
@@ -43,6 +45,11 @@ class Main(object):
         if self.interface.keyboard_interrupt:
             self.running = False
             self.in_menu = False
+        if self.interface.restart:
+            self.interface.restart = False
+            self.in_menu = False
+            self.in_game = True
+            self.reset()
         if self.in_game:
             self.game_loop()
         pygame.display.update()

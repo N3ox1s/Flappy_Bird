@@ -10,8 +10,10 @@ class Interface(object):
         self.height = 512
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
+        self.high_score = 0
         self.keyboard_interrupt = False
         self.jumped = False
+        self.exit = False
         self.collided = False
         self.restart = False
         self.go_to_menu = False
@@ -103,9 +105,42 @@ class Interface(object):
 
         self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
 
-        self.screen.blit(self.font.render(str(physics.score), True, (255, 255, 255)), (100, 100))
+        self.screen.blit(self.font.render(str(physics.score), True, (255, 255, 255)), (50, 50))
+        self.screen.blit(self.font.render(str(self.high_score), True, (255, 255, 255)), (50, 110))
 
     def menu(self):
+        logo = pygame.transform.scale(self.logo, (
+            self.logo.get_width() * 3, self.logo.get_height() * 3))
+        self.screen.blit(logo, (500, 100))
+        play_button = pygame.transform.scale(self.play_button, (
+            self.play_button.get_width() * 5, self.play_button.get_height() * 5))
+        self.screen.blit(play_button, (720, 204))
+        exit_button = pygame.transform.scale(self.exit_button, (
+            self.exit_button.get_width() * 5, self.exit_button.get_height() * 5))
+        self.screen.blit(exit_button, (720, 284))
+        skin_button = pygame.transform.scale(self.skin_button, (
+            self.skin_button.get_width() * 5, self.skin_button.get_height() * 5))
+        self.screen.blit(skin_button, (490, 200))
+        score_button = pygame.transform.scale(self.score_button, (
+            self.score_button.get_width() * 5, self.score_button.get_height() * 5))
+        self.screen.blit(score_button, (490, 280))
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()[0]
+
+        exit_button_dim = (720, 720 + play_button.get_width(), 284, 284 + play_button.get_height())
+        if (exit_button_dim[0] < mouse[0] < exit_button_dim[1] and exit_button_dim[2] < mouse[1] < exit_button_dim[3]
+                and click):
+            self.keyboard_interrupt = True
+        play_button_dim = (720, 720 + play_button.get_width(), 200, 200 + play_button.get_height())
+        if (play_button_dim[0] < mouse[0] < play_button_dim[1] and play_button_dim[2] < mouse[1] < play_button_dim[3]
+                and click):
+            self.restart = True
+        # menu_button_dim = (490, 490 + menu_button.get_width(), 200, 200 + menu_button.get_height())
+        # if (menu_button_dim[0] < mouse[0] < menu_button_dim[1] and menu_button_dim[2] < mouse[1] < menu_button_dim[3]
+        #         and click):
+        #     self.go_to_menu = True
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.keyboard_interrupt = True
@@ -151,18 +186,21 @@ class Interface(object):
         self.game_over = pygame.image.load("Assets/sprites/gameover.png")
         self.menu_button = pygame.image.load("Assets/sprites/menu-button.png")
         self.play_button = pygame.image.load("Assets/sprites/play-button.png")
+        self.exit_button = pygame.image.load("Assets/sprites/exit-button.png")
         self.score_board = pygame.image.load("Assets/sprites/score-board.png")
         self.skin_menu = pygame.image.load("Assets/sprites/skin-menu.png")
-        self.big_play_button = pygame.image.load("Assets/sprites/big-play-button.png")
         self.bg_day = pygame.image.load("Assets/sprites/background-day.png")
         self.bg_night = pygame.image.load("Assets/sprites/background-night.png")
         self.bg_base = pygame.image.load("Assets/sprites/base.png")
+        self.logo = pygame.image.load("Assets/sprites/logo.png")
+        self.skin_button = pygame.image.load("Assets/sprites/skins-button.png")
+        self.score_button = pygame.image.load("Assets/sprites/score-button.png")
         self.yellow_bird_1 = pygame.image.load("Assets/sprites/yellowbird-upflap.png")
         self.yellow_bird_2 = pygame.image.load("Assets/sprites/yellowbird-midflap.png")
         self.yellow_bird_3 = pygame.image.load("Assets/sprites/yellowbird-downflap.png")
         self.pipe_skin_green = pygame.image.load("Assets/sprites/pipe-green.png")
         self.pipe_skin_red = pygame.image.load("Assets/sprites/pipe-red.png")
-        self.font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 200)
+        self.font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 50)
         self.current_pipe_skin = self.pipe_skin_green
 
     def interface_setup(self):

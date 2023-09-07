@@ -30,6 +30,9 @@ class Physics(object):
         self.velocity -= self.gravity * self.dt
         self.pos_y -= self.velocity * self.dt
         self.counter += 2
+        if self.pos_y <= 0:
+            self.pos_y = 0
+            self.velocity = 0
         if self.counter == self.pipe_distance:
             self.counter = 0
             self.score += 1
