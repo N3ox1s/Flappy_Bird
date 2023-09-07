@@ -9,6 +9,7 @@ class Main(object):
         self.in_game = True
         self.in_death_screen = False
         self.in_menu = False
+        self.in_score_screen = False
         self.FPS = 60
         self.clock = pygame.time.Clock()
         self.interface = Interface()
@@ -22,6 +23,8 @@ class Main(object):
                 self.game_loop()
             if self.in_death_screen:
                 self.death_screen()
+            if self.in_score_screen:
+                self.score_screen()
 
         pygame.quit()
 
@@ -44,7 +47,6 @@ class Main(object):
         self.interface.menu()
         if self.interface.keyboard_interrupt:
             self.running = False
-            self.in_menu = False
         if self.interface.restart:
             self.interface.restart = False
             self.in_menu = False
@@ -52,6 +54,22 @@ class Main(object):
             self.reset()
         if self.in_game:
             self.game_loop()
+        if self.interface.go_to_score_screen:
+            self.interface.go_to_score_screen = False
+            self.in_menu = False
+            self.in_score_screen = True
+        pygame.display.update()
+
+    def score_screen(self):
+        self.interface.display_elements(self.physics)
+        self.interface.score_screen()
+        if self.interface.keyboard_interrupt:
+            self.running = False
+        if self.interface.go_to_menu:
+            self.in_score_screen = False
+            self.in_menu = True
+            self.interface.go_to_menu = False
+
         pygame.display.update()
 
     def death_screen(self):

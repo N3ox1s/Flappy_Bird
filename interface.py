@@ -13,10 +13,10 @@ class Interface(object):
         self.high_score = 0
         self.keyboard_interrupt = False
         self.jumped = False
-        self.exit = False
         self.collided = False
         self.restart = False
         self.go_to_menu = False
+        self.go_to_score_screen = False
         self.movable_pipe_distance = 0
         self.pipes = []
         self.pipe_skins = []
@@ -138,10 +138,30 @@ class Interface(object):
         if (play_button_dim[0] < mouse[0] < play_button_dim[1] and play_button_dim[2] < mouse[1] < play_button_dim[3]
                 and click):
             self.restart = True
-        # menu_button_dim = (490, 490 + menu_button.get_width(), 200, 200 + menu_button.get_height())
-        # if (menu_button_dim[0] < mouse[0] < menu_button_dim[1] and menu_button_dim[2] < mouse[1] < menu_button_dim[3]
-        #         and click):
-        #     self.go_to_menu = True
+        score_button_dim = (490, 490 + score_button.get_width(), 280, 280 + score_button.get_height())
+        if (score_button_dim[0] < mouse[0] < score_button_dim[1] and score_button_dim[2] < mouse[1] < score_button_dim[3]
+                and click):
+            self.go_to_score_screen = True
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.keyboard_interrupt = True
+
+    def score_screen(self):
+        score_board = pygame.transform.scale(self.score_board, (
+            self.score_board.get_width() * 5, self.score_board.get_height() * 5))
+        self.screen.blit(score_board, (490, 20))
+        back_button = pygame.transform.scale(self.back_button, (
+            self.back_button.get_width() * 5, self.back_button.get_height() * 5))
+        self.screen.blit(back_button, (410, 400))
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()[0]
+
+        back_button_dim = (410, 410 + back_button.get_width(), 400, 400 + back_button.get_height())
+        if (back_button_dim[0] < mouse[0] < back_button_dim[1] and back_button_dim[2] < mouse[1] < back_button_dim[3]
+                and click):
+            self.go_to_menu = True
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -192,6 +212,7 @@ class Interface(object):
         self.exit_button = pygame.image.load("Assets/sprites/exit-button.png")
         self.score_board = pygame.image.load("Assets/sprites/score-board.png")
         self.skin_menu = pygame.image.load("Assets/sprites/skin-menu.png")
+        self.back_button = pygame.image.load("Assets/sprites/back-button.png")
         self.bg_day = pygame.image.load("Assets/sprites/background-day.png")
         self.bg_night = pygame.image.load("Assets/sprites/background-night.png")
         self.bg_base = pygame.image.load("Assets/sprites/base.png")
