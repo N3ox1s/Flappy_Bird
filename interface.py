@@ -105,8 +105,10 @@ class Interface(object):
 
         self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
 
-        self.screen.blit(self.font.render(str(physics.score), True, (255, 255, 255)), (50, 50))
-        self.screen.blit(self.font.render(str(self.high_score), True, (255, 255, 255)), (50, 110))
+        self.screen.blit(self.font.render(str(physics.score), True, (255, 255, 255)), (100, 80))
+
+        self.screen.blit(pygame.transform.scale(self.pokal, (50, 50)), (30, 20))
+        self.screen.blit(self.font.render(str(self.high_score), True, (255, 255, 255)), (100, 20))
 
     def menu(self):
         logo = pygame.transform.scale(self.logo, (
@@ -182,6 +184,7 @@ class Interface(object):
             return self.yellow_bird_3
 
     def load_assets(self):
+        self.pokal = pygame.image.load("Assets/sprites/pokal.png")
         self.icon = pygame.image.load("Assets/favicon.ico")
         self.game_over = pygame.image.load("Assets/sprites/gameover.png")
         self.menu_button = pygame.image.load("Assets/sprites/menu-button.png")
