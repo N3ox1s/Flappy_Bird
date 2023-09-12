@@ -17,12 +17,15 @@ class Interface(object):
         self.restart = False
         self.go_to_menu = False
         self.go_to_score_screen = False
+        self.go_to_text_input = False
         self.movable_pipe_distance = 0
         self.pipes = []
         self.pipe_skins = []
         self.pipe_colliders = []
         self.bird_collider = None
         self.ground_collider = None
+        self.leave_text_input = False
+        self.text = ""
         self.bg_scroll = 0
         self.fg_scroll = 0
 
@@ -139,7 +142,8 @@ class Interface(object):
                 and click):
             self.restart = True
         score_button_dim = (490, 490 + score_button.get_width(), 280, 280 + score_button.get_height())
-        if (score_button_dim[0] < mouse[0] < score_button_dim[1] and score_button_dim[2] < mouse[1] < score_button_dim[3]
+        if (score_button_dim[0] < mouse[0] < score_button_dim[1] and score_button_dim[2] < mouse[1] < score_button_dim[
+            3]
                 and click):
             self.go_to_score_screen = True
 
@@ -154,6 +158,11 @@ class Interface(object):
         back_button = pygame.transform.scale(self.back_button, (
             self.back_button.get_width() * 5, self.back_button.get_height() * 5))
         self.screen.blit(back_button, (410, 400))
+        input_button = pygame.transform.scale(self.input_button, (
+            self.input_button.get_width() * 5, self.input_button.get_height() * 5))
+        self.screen.blit(input_button, (800, 320))
+
+        self.screen.blit(self.input_font.render(str(self.text), True, (85, 48, 6)), (825, 350))
 
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()[0]
@@ -162,10 +171,44 @@ class Interface(object):
         if (back_button_dim[0] < mouse[0] < back_button_dim[1] and back_button_dim[2] < mouse[1] < back_button_dim[3]
                 and click):
             self.go_to_menu = True
+            self.in_text_input = False
+
+        self.input_button_dim = (800, 800 + input_button.get_width(), 350, 350 + input_button.get_height())
+        if (self.input_button_dim[0] < mouse[0] < self.input_button_dim[1] and self.input_button_dim[2] < mouse[1] <
+                self.input_button_dim[3]
+                and click):
+            self.go_to_text_input = True
+            self.input_box()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.keyboard_interrupt = True
+
+    def input_box(self):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()[0]
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.keyboard_interrupt = True
+
+            if pygame.key.get_pressed()[pygame.K_RETURN]:
+                self.leave_text_input = True
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    if len(self.text) <= 8:
+                        self.text += event.unicode
+
+        if not (self.input_button_dim[0] < mouse[0] < self.input_button_dim[1] and self.input_button_dim[2] < mouse[1] <
+                self.input_button_dim[3]) and click:
+            self.leave_text_input = True
+
+        pygame.draw.rect(self.screen, (255, 247, 216), (819, 339, 172, 37))
+        self.screen.blit(self.input_font.render(str(self.text), True, (85, 48, 6)), (825, 350))
+        pygame.display.flip()
 
     def death_screen(self):
         menu_button = pygame.transform.scale(self.menu_button, (
@@ -225,6 +268,8 @@ class Interface(object):
         self.pipe_skin_green = pygame.image.load("Assets/sprites/pipe-green.png")
         self.pipe_skin_red = pygame.image.load("Assets/sprites/pipe-red.png")
         self.font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 50)
+        self.input_font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 25)
+        self.input_button = pygame.image.load("Assets/sprites/input-button.png")
         self.current_pipe_skin = self.pipe_skin_green
 
     def interface_setup(self):

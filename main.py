@@ -10,6 +10,7 @@ class Main(object):
         self.in_death_screen = False
         self.in_menu = False
         self.in_score_screen = False
+        self.in_text_input = False
         self.FPS = 60
         self.clock = pygame.time.Clock()
         self.interface = Interface()
@@ -25,6 +26,10 @@ class Main(object):
                 self.death_screen()
             if self.in_score_screen:
                 self.score_screen()
+            if self.in_text_input:
+                self.text_input()
+            #print(self.in_score_screen, self.in_text_input)
+
 
         pygame.quit()
 
@@ -69,8 +74,21 @@ class Main(object):
             self.in_score_screen = False
             self.in_menu = True
             self.interface.go_to_menu = False
+        if self.interface.go_to_text_input:
+            self.interface.go_to_text_input = False
+            self.in_score_screen = False
+            self.in_text_input = True
 
         pygame.display.update()
+
+    def text_input(self):
+        self.interface.input_box()
+        if self.interface.keyboard_interrupt:
+            self.running = False
+        if self.interface.leave_text_input:
+            self.in_score_screen = True
+            self.in_text_input = False
+            self.interface.leave_text_input = False
 
     def death_screen(self):
         self.interface.death_screen()
