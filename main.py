@@ -28,8 +28,6 @@ class Main(object):
                 self.score_screen()
             if self.in_text_input:
                 self.text_input()
-            #print(self.in_score_screen, self.in_text_input)
-
 
         pygame.quit()
 

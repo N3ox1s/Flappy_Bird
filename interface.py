@@ -28,6 +28,8 @@ class Interface(object):
         self.text = ""
         self.bg_scroll = 0
         self.fg_scroll = 0
+        self.highscore_list = []
+        self.score = 0
 
     def interface_loop(self, physics):
 
@@ -108,7 +110,8 @@ class Interface(object):
 
         self.screen.blit(self.current_bird_sprite(), (self.width // 2, physics.pos_y))
 
-        self.screen.blit(self.font.render(str(physics.score), True, (255, 255, 255)), (100, 80))
+        self.score = str(physics.score)
+        self.screen.blit(self.font.render(self.score, True, (255, 255, 255)), (100, 80))
 
         self.screen.blit(pygame.transform.scale(self.pokal, (50, 50)), (30, 20))
         self.screen.blit(self.font.render(str(self.high_score), True, (255, 255, 255)), (100, 20))
@@ -168,6 +171,8 @@ class Interface(object):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()[0]
 
+
+
         back_button_dim = (410, 410 + back_button.get_width(), 400, 400 + back_button.get_height())
         if (back_button_dim[0] < mouse[0] < back_button_dim[1] and back_button_dim[2] < mouse[1] < back_button_dim[3]
                 and click):
@@ -195,6 +200,9 @@ class Interface(object):
 
             if pygame.key.get_pressed()[pygame.K_RETURN]:
                 self.leave_text_input = True
+                self.highscore_list.append([self.text, self.score])
+                with open("highscores.txt", "a") as file:
+                    file.write(self.text + " " + self.score + "\n")
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
@@ -274,6 +282,12 @@ class Interface(object):
         self.input_font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 25)
         self.input_button = pygame.image.load("Assets/sprites/input-button.png")
         self.current_pipe_skin = self.pipe_skin_green
+
+        with open("Highscores.txt") as file:
+            for line in file:
+                self.highscore_list.append(line.split())
+
+        print(self.highscore_list)
 
     def interface_setup(self):
         self.bg_width = self.bg_day.get_width()
