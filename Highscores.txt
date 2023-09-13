@@ -1,8 +1,1 @@
-thomas 99999
-til 3
-tom 200
-Tom 0
-Paul 0
-Joni 0
-Ja 5
-iiiiiiiiiiiiiiiiiiiii 0
+Thomas 4
