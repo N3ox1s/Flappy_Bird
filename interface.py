@@ -171,7 +171,14 @@ class Interface(object):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()[0]
 
-
+        margin = 0
+        self.highscore_list = sorted(self.highscore_list, key=lambda x: int(x[1]), reverse =True)
+        for i in self.highscore_list:
+            self.text_surface = self.input_font.render(str(i[0]), True, (85, 48, 6))
+            self.screen.blit(self.text_surface, (515, 100 + margin))
+            self.text_surface = self.input_font.render(str(i[1]), True, (85, 48, 6))
+            self.screen.blit(self.text_surface, (680, 100 + margin))
+            margin += 30
 
         back_button_dim = (410, 410 + back_button.get_width(), 400, 400 + back_button.get_height())
         if (back_button_dim[0] < mouse[0] < back_button_dim[1] and back_button_dim[2] < mouse[1] < back_button_dim[3]
@@ -286,8 +293,6 @@ class Interface(object):
         with open("Highscores.txt") as file:
             for line in file:
                 self.highscore_list.append(line.split())
-
-        print(self.highscore_list)
 
     def interface_setup(self):
         self.bg_width = self.bg_day.get_width()
