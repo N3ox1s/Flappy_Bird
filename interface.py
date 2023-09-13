@@ -162,7 +162,8 @@ class Interface(object):
             self.input_button.get_width() * 5, self.input_button.get_height() * 5))
         self.screen.blit(input_button, (800, 320))
 
-        self.screen.blit(self.input_font.render(str(self.text), True, (85, 48, 6)), (825, 350))
+        self.text_surface = self.input_font.render(str(self.text), True, (85, 48, 6))
+        self.screen.blit(self.text_surface, (825, 350))
 
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()[0]
@@ -173,7 +174,7 @@ class Interface(object):
             self.go_to_menu = True
             self.in_text_input = False
 
-        self.input_button_dim = (800, 800 + input_button.get_width(), 350, 350 + input_button.get_height())
+        self.input_button_dim = (800, 800 + input_button.get_width(), 320, 320 + input_button.get_height())
         if (self.input_button_dim[0] < mouse[0] < self.input_button_dim[1] and self.input_button_dim[2] < mouse[1] <
                 self.input_button_dim[3]
                 and click):
@@ -199,15 +200,17 @@ class Interface(object):
                 if event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
                 else:
-                    if len(self.text) <= 8:
-                        self.text += event.unicode
+                    self.text += event.unicode
+                    if self.text_surface.get_width() > self.input_button.get_width() * 5 - 65:
+                        self.text = self.text[:-1]
 
         if not (self.input_button_dim[0] < mouse[0] < self.input_button_dim[1] and self.input_button_dim[2] < mouse[1] <
                 self.input_button_dim[3]) and click:
             self.leave_text_input = True
 
         pygame.draw.rect(self.screen, (255, 247, 216), (819, 339, 172, 37))
-        self.screen.blit(self.input_font.render(str(self.text), True, (85, 48, 6)), (825, 350))
+        self.text_surface = self.input_font.render(str(self.text), True, (85, 48, 6))
+        self.screen.blit(self.text_surface, (825, 350))
         pygame.display.flip()
 
     def death_screen(self):
