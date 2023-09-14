@@ -6,9 +6,9 @@ from physics import Physics
 class Main(object):
     def __init__(self):
         self.running = True
-        self.in_game = True
+        self.in_game = False
         self.in_death_screen = False
-        self.in_menu = False
+        self.in_menu = True
         self.in_skin_menu = False
         self.in_score_screen = False
         self.in_text_input = False
