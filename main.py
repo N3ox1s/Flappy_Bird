@@ -9,6 +9,7 @@ class Main(object):
         self.in_game = True
         self.in_death_screen = False
         self.in_menu = False
+        self.in_skin_menu = False
         self.in_score_screen = False
         self.in_text_input = False
         self.FPS = 60
@@ -28,6 +29,8 @@ class Main(object):
                 self.score_screen()
             if self.in_text_input:
                 self.text_input()
+            if self.in_skin_menu:
+                self.skin_menu()
 
         pygame.quit()
 
@@ -61,6 +64,10 @@ class Main(object):
             self.interface.go_to_score_screen = False
             self.in_menu = False
             self.in_score_screen = True
+        if self.interface.go_to_skin_menu:
+            self.in_menu = False
+            self.interface.go_to_skin_menu = False
+            self.in_skin_menu = True
         pygame.display.update()
 
     def score_screen(self):
@@ -76,7 +83,17 @@ class Main(object):
             self.interface.go_to_text_input = False
             self.in_score_screen = False
             self.in_text_input = True
+        pygame.display.update()
 
+    def skin_menu(self):
+        self.interface.display_elements(self.physics)
+        self.interface.skin_menu()
+        if self.interface.keyboard_interrupt:
+            self.running = False
+        if self.interface.go_to_menu:
+            self.in_skin_menu = False
+            self.in_menu = True
+            self.interface.go_to_menu = False
         pygame.display.update()
 
     def text_input(self):

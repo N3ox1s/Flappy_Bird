@@ -18,6 +18,7 @@ class Interface(object):
         self.go_to_menu = False
         self.go_to_score_screen = False
         self.go_to_text_input = False
+        self.go_to_skin_menu = False
         self.movable_pipe_distance = 0
         self.pipes = []
         self.pipe_skins = []
@@ -146,9 +147,12 @@ class Interface(object):
             self.restart = True
         score_button_dim = (490, 490 + score_button.get_width(), 280, 280 + score_button.get_height())
         if (score_button_dim[0] < mouse[0] < score_button_dim[1] and score_button_dim[2] < mouse[1] < score_button_dim[
-            3]
-                and click):
+            3] and click):
             self.go_to_score_screen = True
+        skin_button_dim = (490, 490 + skin_button.get_width(), 200, 200 + skin_button.get_height())
+        if (skin_button_dim[0] < mouse[0] < skin_button_dim[1] and skin_button_dim[2] < mouse[1] < skin_button_dim[3]
+                and click):
+            self.go_to_skin_menu = True
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -229,6 +233,21 @@ class Interface(object):
         self.screen.blit(self.text_surface, (825, 350))
         pygame.display.flip()
 
+    def skin_menu(self):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()[0]
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.keyboard_interrupt = True
+
+        skin_sheet = pygame.transform.scale(self.skin_sheet, (
+            self.score_board.get_width() * 5, self.skin_sheet.get_height() * 5))
+        self.screen.blit(skin_sheet, (490, 20))
+        back_button = pygame.transform.scale(self.back_button, (
+            self.back_button.get_width() * 5, self.back_button.get_height() * 5))
+        self.screen.blit(back_button, (410, 400))
+
     def death_screen(self):
         menu_button = pygame.transform.scale(self.menu_button, (
             self.menu_button.get_width() * 5, self.menu_button.get_height() * 5))
@@ -280,10 +299,18 @@ class Interface(object):
         self.bg_base = pygame.image.load("Assets/sprites/base.png")
         self.logo = pygame.image.load("Assets/sprites/logo.png")
         self.skin_button = pygame.image.load("Assets/sprites/skins-button.png")
+        self.skin_sheet = pygame.image.load("Assets/sprites/skin-menu.png")
+        self.skin_border = pygame.image.load("Assets/sprites/skin-border.png")
         self.score_button = pygame.image.load("Assets/sprites/score-button.png")
         self.yellow_bird_1 = pygame.image.load("Assets/sprites/yellowbird-upflap.png")
         self.yellow_bird_2 = pygame.image.load("Assets/sprites/yellowbird-midflap.png")
         self.yellow_bird_3 = pygame.image.load("Assets/sprites/yellowbird-downflap.png")
+        self.red_bird_1 = pygame.image.load("Assets/sprites/redbird-upflap.png")
+        self.red_bird_2 = pygame.image.load("Assets/sprites/redbird-midflap.png")
+        self.red_bird_3 = pygame.image.load("Assets/sprites/redbird-downflap.png")
+        self.blue_bird_1 = pygame.image.load("Assets/sprites/bluebird-upflap.png")
+        self.blue_bird_2 = pygame.image.load("Assets/sprites/bluebird-midflap.png")
+        self.blue_bird_3 = pygame.image.load("Assets/sprites/bluebird-downflap.png")
         self.pipe_skin_green = pygame.image.load("Assets/sprites/pipe-green.png")
         self.pipe_skin_red = pygame.image.load("Assets/sprites/pipe-red.png")
         self.font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 50)
