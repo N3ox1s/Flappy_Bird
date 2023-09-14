@@ -3,7 +3,7 @@ import time
 
 class Physics(object):
     def __init__(self):
-        self.pos_y = 100
+        self.pos_y = 135
         self.gravity = 800
         self.velocity = 0
         self.pipe_distance = 300
