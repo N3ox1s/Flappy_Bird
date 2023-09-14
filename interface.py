@@ -99,7 +99,7 @@ class Interface(object):
 
     def display_elements(self, physics):
         for i in range(self.tiles_bg):
-            self.screen.blit(self.bg_day, (i * self.bg_width + self.bg_scroll, 0))
+            self.screen.blit(self.current_bg_skin, (i * self.bg_width + self.bg_scroll, 0))
 
         for i in self.pipes:
             self.screen.blit(i.pipe_image, (self.width + i.pipe_scroll, i.lower_pipe_length))
@@ -283,12 +283,30 @@ class Interface(object):
             self.bg_night.get_width() * 0.35, self.bg_night.get_height() * 0.275))
         self.screen.blit(bg_night, (675, 175))
 
+        if self.current_bg_skin == self.bg_day:
+            bg_day_border = pygame.transform.scale(self.skin_border_tall, (
+                self.skin_border_tall.get_width() * 5, self.skin_border_tall.get_height() * 5))
+            self.screen.blit(bg_day_border, (525, 165))
+        if self.current_bg_skin == self.bg_night:
+            bg_night_border = pygame.transform.scale(self.skin_border_tall, (
+                self.skin_border_tall.get_width() * 5, self.skin_border_tall.get_height() * 5))
+            self.screen.blit(bg_night_border, (665, 165))
+
         green_pipe = pygame.transform.scale(self.pipe_skin_green_icon, (
             self.pipe_skin_green_icon.get_width() * 1.5, self.pipe_skin_green_icon.get_height() * 1.5))
         self.screen.blit(green_pipe, (546, 352))
         red_pipe = pygame.transform.scale(self.pipe_skin_red_icon, (
             self.pipe_skin_red_icon.get_width() * 1.5, self.pipe_skin_red_icon.get_height() * 1.5))
         self.screen.blit(red_pipe, (686, 352))
+
+        if self.current_pipe_skin == self.pipe_skin_green:
+            bg_day_border = pygame.transform.scale(self.skin_border, (
+                self.skin_border.get_width() * 5, self.skin_border.get_height() * 5))
+            self.screen.blit(bg_day_border, (525, 330))
+        if self.current_pipe_skin == self.pipe_skin_red:
+            bg_night_border = pygame.transform.scale(self.skin_border, (
+                self.skin_border.get_width() * 5, self.skin_border.get_height() * 5))
+            self.screen.blit(bg_night_border, (665, 330))
 
         back_button_dim = (310, 310 + back_button.get_width(), 400, 400 + back_button.get_height())
         if (back_button_dim[0] < mouse[0] < back_button_dim[1] and back_button_dim[2] < mouse[1] < back_button_dim[3]
@@ -307,6 +325,28 @@ class Interface(object):
         if (blue_bird_dim[0] < mouse[0] < blue_bird_dim[1] and blue_bird_dim[2] < mouse[1] < blue_bird_dim[3]
                 and click):
             self.current_bird_skin = 'blue'
+
+        bg_day_dim = (535, 535 + bg_day.get_width(), 175, 175 + bg_day.get_height())
+        if (bg_day_dim[0] < mouse[0] < bg_day_dim[1] and bg_day_dim[2] < mouse[1] < bg_day_dim[3]
+                and click):
+            self.current_bg_skin = self.bg_day
+        bg_night_dim = (675, 675 + bg_night.get_width(), 175, 175 + bg_night.get_height())
+        if (bg_night_dim[0] < mouse[0] < bg_night_dim[1] and bg_night_dim[2] < mouse[1] < bg_night_dim[3]
+                and click):
+            self.current_bg_skin = self.bg_night
+
+        green_pipe_dim = (546, 546 + green_pipe.get_width(), 352, 352 + green_pipe.get_height())
+        if (green_pipe_dim[0] < mouse[0] < green_pipe_dim[1] and green_pipe_dim[2] < mouse[1] < green_pipe_dim[3]
+                and click):
+            self.current_pipe_skin = self.pipe_skin_green
+            for i in self.pipes:
+                i.pipe_image = self.pipe_skin_green
+        red_pipe_dim = (686, 686 + red_pipe.get_width(), 352, 352 + red_pipe.get_height())
+        if (red_pipe_dim[0] < mouse[0] < red_pipe_dim[1] and red_pipe_dim[2] < mouse[1] < red_pipe_dim[3]
+                and click):
+            self.current_pipe_skin = self.pipe_skin_red
+            for i in self.pipes:
+                i.pipe_image = self.pipe_skin_red
 
     def death_screen(self):
         menu_button = pygame.transform.scale(self.menu_button, (
@@ -376,6 +416,7 @@ class Interface(object):
         self.skin_button = pygame.image.load("Assets/sprites/skins-button.png")
         self.skin_sheet = pygame.image.load("Assets/sprites/skin-menu.png")
         self.skin_border = pygame.image.load("Assets/sprites/skin-border.png")
+        self.skin_border_tall = pygame.image.load("Assets/sprites/skin-border-tall.png")
         self.score_button = pygame.image.load("Assets/sprites/score-button.png")
         self.yellow_bird_1 = pygame.image.load("Assets/sprites/yellowbird-upflap.png")
         self.yellow_bird_2 = pygame.image.load("Assets/sprites/yellowbird-midflap.png")
@@ -393,7 +434,6 @@ class Interface(object):
         self.font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 50)
         self.input_font = pygame.font.Font("Assets/font/flappy-bird-font.ttf", 25)
         self.input_button = pygame.image.load("Assets/sprites/input-button.png")
-        self.current_pipe_skin = self.pipe_skin_green
 
         with open("Highscores.txt") as file:
             for line in file:
@@ -405,7 +445,8 @@ class Interface(object):
         self.tiles_bg = math.ceil(self.width / self.bg_width) + 1
         self.tiles_base = math.ceil(self.width / self.base_width) + 1
         self.current_bird_skin = 'yellow'
-        #self.current_pipe_skin = 'green'
+        self.current_bg_skin = self.bg_day
+        self.current_pipe_skin = self.pipe_skin_green
 
         pygame.display.set_icon(self.icon)
         pygame.display.set_caption("Flappy Bird")
