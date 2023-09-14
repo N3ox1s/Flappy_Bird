@@ -135,7 +135,10 @@ class Interface(object):
         self.screen.blit(score_button, (490, 280))
 
         mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()[0]
+        click = False
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONUP:
+                click = True
 
         exit_button_dim = (720, 720 + play_button.get_width(), 284, 284 + play_button.get_height())
         if (exit_button_dim[0] < mouse[0] < exit_button_dim[1] and exit_button_dim[2] < mouse[1] < exit_button_dim[3]
