@@ -145,7 +145,8 @@ class Interface(object):
                 and click):
             self.keyboard_interrupt = True
         play_button_dim = (720, 720 + play_button.get_width(), 200, 200 + play_button.get_height())
-        if (play_button_dim[0] < mouse[0] < play_button_dim[1] and play_button_dim[2] < mouse[1] < play_button_dim[3]and click):
+        if (play_button_dim[0] < mouse[0] < play_button_dim[1] and play_button_dim[2] < mouse[1] < play_button_dim[
+            3] and click):
             self.restart = True
         score_button_dim = (490, 490 + score_button.get_width(), 280, 280 + score_button.get_height())
         if (score_button_dim[0] < mouse[0] < score_button_dim[1] and score_button_dim[2] < mouse[1] < score_button_dim[
@@ -244,11 +245,33 @@ class Interface(object):
                 self.keyboard_interrupt = True
 
         skin_sheet = pygame.transform.scale(self.skin_sheet, (
-            self.score_board.get_width() * 5, self.skin_sheet.get_height() * 5))
-        self.screen.blit(skin_sheet, (490, 20))
+            self.skin_sheet.get_width() * 5, self.skin_sheet.get_height() * 5))
+        self.screen.blit(skin_sheet, (400, 20))
         back_button = pygame.transform.scale(self.back_button, (
             self.back_button.get_width() * 5, self.back_button.get_height() * 5))
-        self.screen.blit(back_button, (410, 400))
+        self.screen.blit(back_button, (310, 400))
+
+        yellow_bird = pygame.transform.scale(self.yellow_bird_2, (
+            self.yellow_bird_2.get_width() * 2.5, self.yellow_bird_2.get_height() * 2.5))
+        self.screen.blit(yellow_bird, (480, 75))
+        red_bird = pygame.transform.scale(self.red_bird_2, (
+            self.red_bird_2.get_width() * 2.5, self.red_bird_2.get_height() * 2.5))
+        self.screen.blit(red_bird, (610, 75))
+        blue_bird = pygame.transform.scale(self.blue_bird_2, (
+            self.blue_bird_2.get_width() * 2.5, self.blue_bird_2.get_height() * 2.5))
+        self.screen.blit(blue_bird, (740, 75))
+
+        bg_day = pygame.transform.scale(self.bg_day, (
+            self.bg_day.get_width() * 0.35, self.bg_day.get_height() * 0.275))
+        self.screen.blit(bg_day, (535, 175))
+        bg_night = pygame.transform.scale(self.bg_night, (
+            self.bg_night.get_width() * 0.35, self.bg_night.get_height() * 0.275))
+        self.screen.blit(bg_night, (675, 175))
+
+        back_button_dim = (310, 310 + back_button.get_width(), 400, 400 + back_button.get_height())
+        if (back_button_dim[0] < mouse[0] < back_button_dim[1] and back_button_dim[2] < mouse[1] < back_button_dim[3]
+                and click):
+            self.go_to_menu = True
 
     def death_screen(self):
         menu_button = pygame.transform.scale(self.menu_button, (
@@ -297,7 +320,6 @@ class Interface(object):
         self.play_button = pygame.image.load("Assets/sprites/play-button.png")
         self.exit_button = pygame.image.load("Assets/sprites/exit-button.png")
         self.score_board = pygame.image.load("Assets/sprites/score-board.png")
-        self.skin_menu = pygame.image.load("Assets/sprites/skin-menu.png")
         self.back_button = pygame.image.load("Assets/sprites/back-button.png")
         self.bg_day = pygame.image.load("Assets/sprites/background-day.png")
         self.bg_night = pygame.image.load("Assets/sprites/background-night.png")
