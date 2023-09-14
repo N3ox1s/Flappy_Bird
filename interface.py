@@ -222,6 +222,10 @@ class Interface(object):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
+
+                elif event.key == pygame.K_SPACE:
+                    pass
+
                 else:
                     self.text += event.unicode
                     if self.text_surface.get_width() > self.input_button.get_width() * 5 - 65:
