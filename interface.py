@@ -145,8 +145,7 @@ class Interface(object):
                 and click):
             self.keyboard_interrupt = True
         play_button_dim = (720, 720 + play_button.get_width(), 200, 200 + play_button.get_height())
-        if (play_button_dim[0] < mouse[0] < play_button_dim[1] and play_button_dim[2] < mouse[1] < play_button_dim[3]
-                and click):
+        if (play_button_dim[0] < mouse[0] < play_button_dim[1] and play_button_dim[2] < mouse[1] < play_button_dim[3]and click):
             self.restart = True
         score_button_dim = (490, 490 + score_button.get_width(), 280, 280 + score_button.get_height())
         if (score_button_dim[0] < mouse[0] < score_button_dim[1] and score_button_dim[2] < mouse[1] < score_button_dim[
@@ -263,7 +262,10 @@ class Interface(object):
         self.screen.blit(game_over, (500, 100))
 
         mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()[0]
+        click = False
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONUP:
+                click = True
 
         menu_button_dim = (490, 490 + menu_button.get_width(), 200, 200 + menu_button.get_height())
         if (menu_button_dim[0] < mouse[0] < menu_button_dim[1] and menu_button_dim[2] < mouse[1] < menu_button_dim[3]
