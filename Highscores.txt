@@ -1,4 +1,2 @@
-Thomas 4
-NasseRHUND 20
-tom 5
-til 0
+Bob 20
+Alice 5
