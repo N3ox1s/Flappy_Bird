@@ -1,11 +1,11 @@
-import random
+from random import randint
 
 
 class Pipe(object):
     def __init__(self):
         self.pipe_scroll = 0
         self.lower_pipe_length = 0
-        self.pipe_gap = random.randint(110, 150)
+        self.pipe_gap = randint(110, 150)
         self.pipe_image = None
 
     def move(self):
